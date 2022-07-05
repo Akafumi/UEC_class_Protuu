@@ -1,0 +1,36 @@
+void setup() {
+  size(1900, 1000);
+  fill(178,34,52);
+  rect(0,0,1900,1000/13);
+  rect(0,2000/13,1900,1000/13);
+  rect(0,4000/13,1900,1000/13);
+  rect(0,6000/13,1900,1000/13);
+  // rect(0,1000*8/13,1900,1000/13);
+  // rect(0,1000*10/13,1900,1000/13);
+  // rect(0,1000*12/13,1900,1000/13);
+  // fiveStar(3.08, 50,50);
+}
+
+void fiveStar(float r, int x, int y) {
+  for (float t=3*PI/10; t<=2*PI; t+=2*PI/5) {
+    float a=x+r*cos(t);
+    float b=y+r*sin(t);
+    float c=x+r*cos(t+4*PI/5);
+    float d=y+r*sin(t+4*PI/5);
+    noStroke();
+    fill(255,255,255);
+    triangle(a, b, c, d, x, y);
+  }
+}
+
+// void stripe(int t) {
+//   int i;
+//   float w;
+//   float y=0;
+//   w=1000/t;
+//   for (i=0; i<t; i+=1) {
+//     y=y+w*i
+//     fill(178,34,52);
+//     rect(0, y, 1900, y+w);
+//   }
+// }

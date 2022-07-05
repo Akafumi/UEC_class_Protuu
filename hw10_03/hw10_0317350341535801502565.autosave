@@ -1,0 +1,71 @@
+// バーのパラメータ
+int bar_width = 60; // バーの幅
+int bar_height = 15;// バーの高さ
+int bar_x = 200;    // バーのx座標
+int bar_y = 470;    // バーのy座標
+color bar_color = color(150, 0, 100); // バーの色
+
+// ボールのパラメータ
+float ball_dia = 12;                 // ボールの直径
+float ball_x = bar_x + bar_width/2;  // ボールのx座標
+float ball_y = bar_y - ball_dia/2;   // ボールのy座標
+float vx = random(random(-3, -3),random(3, 3)); // ボールの速さ(x方向)
+float vy = -5.5;                                // ボールの速さ(y方向)
+
+
+boolean start_click = false;
+int score;
+
+void setup() {
+  size(600, 600);
+}//end of set up
+
+void draw(){
+  background(0);
+
+ // バーの描画
+  fill(200,155,155);  
+  rect(bar_x, bar_y, bar_width, bar_height);
+  bar_x = mouseX - bar_width/2;
+  
+  // バーが画面外にある場合の処理
+  if(bar_x > width - bar_width){
+    bar_x = width - bar_width;
+  }
+  if(bar_x < 0){
+    bar_x = 0;
+  }
+  
+   // ボールの描画
+  fill(200, 0, 0);
+  ellipse(ball_x, ball_y, ball_dia, ball_dia);
+  // ボールの移動(速度分)
+  if(start_click){
+    ball_x += vx;
+    ball_y += vy;
+  }
+  // ボールの処理(壁と衝突後)
+  if( ball_x > width || ball_x < 0){
+    vx *= -1;
+  }
+  if( ball_y < 0){
+    vy *= -1;
+  }
+  // ボールがバーより下ならゲームオーバー
+  if( ball_y > height){
+    text("Game Over", width/2 , height/2);
+  }
+  
+    // バーにボールが衝突した場合の処理
+  if(ball_x > bar_x-5 && ball_x < bar_x + bar_width + 5){
+    if(ball_y > bar_y && ball_y < bar_y + 6){
+      vx += random(0.5,0.5);
+      vy *= -1.01;
+    }
+  }
+}
+
+
+void mousePressed(){
+  start_click = !start_click;
+}
