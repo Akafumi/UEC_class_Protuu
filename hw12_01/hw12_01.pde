@@ -3,7 +3,7 @@ Ball[] Ball;
 Star[] Star;
 
 void setup() {
-  size (600,400);
+  size(1200, 800);
   fill(255, 0, 0);  
   Star = new Star[Num];
   for (int i=0; i<Num; i+=1) {
@@ -24,7 +24,9 @@ void setup() {
       vy = int(random(10,15));
     }
 
-    Star[i] = new Star(d,x,y,vx,vy,r,g,b);
+    float r_v = random(PI/60, PI/3);
+
+    Star[i] = new Star(d,x,y,vx,vy,r,g,b,r_v);
   }
 }
 
@@ -32,10 +34,9 @@ void draw() {
   background(0);
 
   for (int i=0; i<Num; i+=1) {
-    float r_v = random(PI/60, PI/6);
     Star[i].draw();
     Star[i].move();
-    Star[i].rotation(r_v);
+    Star[i].rotation();
   }
 }
 
@@ -96,12 +97,19 @@ class Ball{
 
 class Star extends Ball{
   float t_0 = 3*PI/10;  
+  float r_v;
 
-  Star (int Star_d, float Star_x, float Star_y, int Star_vx, int Star_vy, int Star_r, int Star_g, int Star_b) {
+  Star (int Star_d, float Star_x, float Star_y, int Star_vx, int Star_vy, int Star_r, int Star_g, int Star_b, float Star_r_v) {
     set_size(Star_d);
     set_position(Star_x, Star_y);
     set_speed(Star_vx, Star_vy);
     set_color(Star_r, Star_g, Star_b);
+
+    set_rotation(Star_r_v);
+  }
+
+  public void set_rotation(float r_v) { 
+    this.r_v = r_v;
   }
 
   void draw() {
@@ -121,7 +129,7 @@ class Star extends Ball{
     }
   }
 
-  public void rotation(float r_v) {
+  public void rotation() {
     t_0 += r_v;
 
     if(t_0 > 2*PI) {
